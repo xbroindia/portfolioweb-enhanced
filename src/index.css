@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: #060608;
+    color: #f0eff8;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Noise overlay — pointer-events:none so it never blocks clicks */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9997;
+    opacity: 0.35;
+  }
+}
+
+@layer components {
+  .gradient-text {
+    background: linear-gradient(135deg, #6c63ff, #00d4ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .nav-link {
+    @apply text-[13px] font-medium tracking-[0.08em] uppercase text-muted no-underline relative transition-colors duration-300;
+  }
+  .nav-link::after {
+    content: '';
+    @apply absolute left-0 -bottom-1 w-0 h-px transition-[width] duration-300;
+    background: linear-gradient(90deg, #6c63ff, #00d4ff);
+  }
+  .nav-link:hover { @apply text-[#f0eff8]; }
+  .nav-link:hover::after { @apply w-full; }
+
+  /* Reveal: use translate + opacity only — both GPU composited, no layout */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    /* Hint to browser that these properties will change */
+    will-change: opacity, transform;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+    will-change: auto; /* release after animation */
+  }
+
+  .skill-bar-fill {
+    @apply h-full rounded-full;
+    width: 0;
+    transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+    background: linear-gradient(90deg, #6c63ff, #00d4ff);
+  }
+
+  .project-card::before {
+    content: '';
+    @apply absolute top-0 left-0 right-0 h-0.5 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(90deg, #6c63ff, #00d4ff);
+  }
+  .project-card:hover::before { @apply opacity-100; }
+
+  .glitch-logo { position: relative; display: inline-block; }
+  .glitch-logo::before,
+  .glitch-logo::after {
+    content: attr(data-text);
+    position: absolute; top: 0; left: 0;
+    background: linear-gradient(135deg, #6c63ff, #00d4ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0;
+  }
+  .glitch-logo:hover::before {
+    animation: glitch1 0.3s steps(1) infinite;
+    clip-path: polygon(0 30%, 100% 30%, 100% 55%, 0 55%);
+    transform: translate(-2px, 0);
+    opacity: 0.7;
+  }
+  .glitch-logo:hover::after {
+    animation: glitch2 0.3s steps(1) infinite;
+    clip-path: polygon(0 65%, 100% 65%, 100% 85%, 0 85%);
+    transform: translate(2px, 0);
+    opacity: 0.7;
+  }
+
+  .hero-grid {
+    @apply absolute inset-0;
+    background-image:
+      linear-gradient(rgba(108,99,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(108,99,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+}
+
+@layer utilities {
+  .orbit-ring {
+    @apply absolute rounded-full border border-[rgba(108,99,255,0.08)] top-1/2 left-1/2;
+    /* Keep orbit rings on their own compositor layer */
+    will-change: transform;
+  }
+}
+
+/* Keyframes — transform + opacity only for smooth 60fps */
+@keyframes glitch1 {
+  0%,100% { transform: translate(-2px, 0); }
+  50%      { transform: translate(2px, 0); }
+}
+@keyframes glitch2 {
+  0%,100% { transform: translate(2px, 0); }
+  50%      { transform: translate(-2px, 0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+@keyframes orbit1 {
+  from { transform: translate(-50%,-50%) rotate(0deg); }
+  to   { transform: translate(-50%,-50%) rotate(360deg); }
+}
+
+@keyframes imgPulse {
+  0%, 100% { filter: drop-shadow(0 0 10px rgba(108,99,255,0.2)); }
+  50%       { filter: drop-shadow(0 0 28px rgba(0,212,255,0.25)); }
+}
+
+/* floatCode uses transform for the main movement — GPU composited */
+@keyframes floatCode {
+  from { transform: translateY(0)   rotate(0deg);   opacity: 0; }
+  8%   { opacity: 0.7; }
+  92%  { opacity: 0.5; }
+  to   { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+}
