@@ -34,7 +34,7 @@ npm run dev
 
 ## 🌐 Live
 
-[xbrocoder.netlify.app](https://hamdancoder.in/)
+(https://hamdancoder.in/)
 
 ---
 Built with ❤️ by [Shah Hamdan](https://github.com/xbroindia)
