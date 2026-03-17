@@ -1,3 +1,4 @@
+## File Structure
 portfolio/
 ├── index.html
 ├── package.json
