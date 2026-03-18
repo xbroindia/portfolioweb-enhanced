@@ -27,7 +27,7 @@ const PROJECTS = [
     title:  'Interior Guru Designer',
     desc:   'A visually rich interior design studio website with elegant layout and smooth scroll interactions.',
     tags:   ['HTML', 'CSS', 'Animations'],
-    url:    'https://interiror-designing-web.netlify.app/',
+    url:    'https://interiror-designer.netlify.app//',
   },
   {
     num:    '05',
