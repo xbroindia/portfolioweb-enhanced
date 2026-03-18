@@ -32,8 +32,7 @@
 npm install
 npm run dev
 
-## 🌐 Live
-
+** 🌐Live**
 (https://hamdancoder.in/)
 
 ---
