@@ -13,7 +13,7 @@ const PROJECTS = [
     title:  'Tic Tac Toe Game',
     desc:   'An interactive browser-based game with clean UI, win detection, and reset functionality.',
     tags:   ['JavaScript', 'DOM Manipulation'],
-    url:    'https://tic-tac-toe-game-proj.netlify.app/',
+    url:    'https://tic-tac-toe-enhance.netlify.app/',
   },
   {
     num:    '03',
